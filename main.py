@@ -1,6 +1,7 @@
 #this is main file
 from flask import Flask, render_template, Response
 import cv2
+import time
 
 app = Flask(__name__)
 
@@ -18,6 +19,7 @@ def gen_frames():  # generate frame by frame from camera
         else:
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
+            #time.sleep(0.041)
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
             
@@ -33,7 +35,7 @@ def video_feed():
 @app.route('/')
 def index():
     """Video streaming home page."""
-    return render_template('index.html')
+    return render_template('main.html')
 
 
 if __name__ == '__main__':
