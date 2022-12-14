@@ -6,8 +6,11 @@
     -moz-osx-font-smoothing: grayscale;
 }
 body {
-    background-color: #435165;
-    margin: 0;
+    background-image: url('background-login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: soft-light;
+    background-color: #686d73;
 }
 .login, .register {
     width: 400px;
@@ -144,4 +147,11 @@ body.loggedin {
 .content > div p {
   padding: 5px;
   margin: 0 0 10px 0;
+}
+.msg{
+    color: red;
+}
+.closing{
+    text-align: center;
+    color: white;
 }

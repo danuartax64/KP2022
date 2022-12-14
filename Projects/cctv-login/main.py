@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Response
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-import cv2
+import cv2, socket
 
 app = Flask(__name__)
+hostname=socket.gethostname()
+iphost = socket.gethostbyname(hostname)
 
 #camera = cv2.VideoCapture(0)
-camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64/?2h6x=4')  # use 0 for web camera
+#camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64/?2h6x=4')  # use 0 for web camera
+camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64:554/h264')
 #camera = cv2.VideoCapture('rtsp://admin:admin123@10.203.21.20:554/Streaming/Channels/1/')
 #  for cctv camera use rtsp://username:password@ip_address:554/user=username_password='password'_channel=channel_number_stream=0.sdp' instead of camera
 
@@ -21,6 +24,7 @@ def gen_frames():  # generate frame by frame from camera
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+
 # Change this to your secret key (can be anything, it's for extra protection)
 app.secret_key = 'SK2022'
 
@@ -61,7 +65,7 @@ def login():
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
     # Show the login form with message (if any)
-    return render_template('index.html')
+    return render_template('index.html', msg=msg)
 
 @app.route('/video_feed')
 def video_feed():
@@ -70,4 +74,4 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(debug = True, host='10.203.31.33', port=5000)
+    app.run(debug = True, host=(iphost), port=5000)
