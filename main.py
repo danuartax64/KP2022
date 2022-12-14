@@ -1,12 +1,12 @@
 #this is main file
 from flask import Flask, render_template, Response
 import cv2
-import time
+#import time
 
 app = Flask(__name__)
 
-camera = cv2.VideoCapture(0)
-#camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64/?2h6x=4')  # use 0 for web camera
+#camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64/?2h6x=4')  # use 0 for web camera
 #camera2 = cv2.VideoCapture('rtsp://admin:admin123@10.203.21.20:554/Streaming/Channels/1/')
 #  for cctv camera use rtsp://username:password@ip_address:554/user=username_password='password'_channel=channel_number_stream=0.sdp' instead of camera
 
@@ -39,4 +39,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1')
+    app.run(debug = True, host='10.203.31.33', port=5000)
