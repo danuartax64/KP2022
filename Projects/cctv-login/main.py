@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, Response
+from flask import Flask, render_template, request, session, Response
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import cv2, socket
@@ -7,10 +7,10 @@ app = Flask(__name__)
 hostname=socket.gethostname()
 iphost = socket.gethostbyname(hostname)
 
-#camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0)
 #camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64/?2h6x=4')  # use 0 for web camera
-camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64:554/h264')
-#camera = cv2.VideoCapture('rtsp://admin:admin123@10.203.21.20:554/Streaming/Channels/1/')
+#camera = cv2.VideoCapture('rtsp://service:Az123456b$@10.203.2.64:554/h264')
+#camera = cv2.VideoCapture('rtsp://admin:admin123@10.203.21.20:554/Streaming/Channels/1')
 #  for cctv camera use rtsp://username:password@ip_address:554/user=username_password='password'_channel=channel_number_stream=0.sdp' instead of camera
 
 def gen_frames():  # generate frame by frame from camera
@@ -69,9 +69,9 @@ def login():
 
 @app.route('/video_feed')
 def video_feed():
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen_frames(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+        """Video streaming route. Put this in the src attribute of an img tag."""
+        return Response(gen_frames(),
+            mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug = True, host=(iphost), port=5000)
