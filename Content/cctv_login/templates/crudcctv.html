@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <title>Daftar CCTV</title>
+    
+    <link rel="stylesheet" crossorigin="anonymous"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+	<script crossorigin="anonymous"
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+	</script>
+
+</head>
+
+<body>
+    <h2>CCTV List</h2>
+    <a class="btn btn-primary" href="/dashboardadm/list_cctv/add_cctv">Add New CCTV</a>
+    <a class="btn btn-secondary" href="/dashboardadm">Back to Dashboard</a>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Link</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in cctv %}
+                <tr>
+                    <td>{{row[0]}}</th>
+                    <td>{{row[1]}}</td>
+                    <td><a href='/dashboardadm/list_cctv/update_cctv/{{row[2]}}'>Edit</a></td>
+                    <td><a href='/dashboardadm/list_cctv/delete_cctv/{{row[2]}}' onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>

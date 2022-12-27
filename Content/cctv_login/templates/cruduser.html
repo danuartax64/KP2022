@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <title>Daftar User</title>
+    
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+	<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-cruduser-list.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+    <header>
+        <div class="topnav">
+            <div class="topnav-left">
+                <a>User List</a>
+                <a class="btn btn-primary" href="/dashboardadm/list_user/add_user">Add New User</a>
+                <a class="btn btn-secondary" href="/dashboardadm">Back to Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Password</th>
+                        <th scope="col" title="1 berarti Admin">FullAkses</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in user %}
+                <tr>
+                    <td>{{row[1]}}</th>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td><a class="button" href='/dashboardadm/list_user/update_user/{{row[0]}}'><i class="bi bi-pencil-fill"></i> Edit</a></td>
+                    <td><a class="buttond" href='/dashboardadm/list_user/delete_user/{{row[0]}}' onclick="return confirm('Are you sure you want to delete?');"><i class="bi bi-trash-fill"></i> Delete</a></td>
+                </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+</body>
