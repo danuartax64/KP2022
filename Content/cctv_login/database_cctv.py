@@ -18,7 +18,7 @@ def closeDb():
 
 #array load nama dan link camera dari databae
 #index array ke 2-3 merupakan nama dan link dari kamera yang akan diplay pada browser
-active_camera = [[],[],['WinCam1', 'WinCam2', 'WinCam3', 'WinCam4'],[r'C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4',r'C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4',r'C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4',r'C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4']]
+active_camera = [[],[],['WinCam1', 'WinCam2', 'WinCam3', 'WinCam4'],[r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4',r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4',r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4',r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4']]
 
 def get_db_camera():
     openDb()

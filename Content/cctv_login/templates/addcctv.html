@@ -3,24 +3,36 @@
 <head>
     <title>Add CCTV</title>
     
-    <link rel="stylesheet" crossorigin="anonymous"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
     
-	<script crossorigin="anonymous"
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
-	</script>
+	<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-cruduser-add.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 </head>
 <body>
-    <form action="/dashboardadm/list_cctv/add_cctv" method=post>
-        <div class="mb-13 mt-3">
-        <label for="nama" class="form-label">Nama CCTV:</label>
-        <input type="input" class="form-control" placeholder="Nama" name="nama_cctv" required>
+    <header>
+        <div class="topnav">
+            <div class="topnav-left">
+                <a>Add CCTV</a>
+                <a class="btn btn-secondary" href="/dashboardadm/list_cctv">Back to list CCTV</a>
+            </div>
         </div>
-        <div class="mb-3">
-        <label for="univ" class="form-label">Link CCTV:</label>
-        <input type="input" class="form-control" placeholder="rtsp://user:12345@1.2.3.4:554" name="link_cctv" required>
+    </header>
+
+    <main>
+        <div class="main">
+            <form action="/dashboardadm/list_cctv/add_cctv" method=post>
+                <div class="mb-13 mt-3">
+                <label for="nama" class="form-label">Nama CCTV:</label>
+                <input type="input" class="form-control" placeholder="Nama" name="nama_cctv" required>
+                </div>
+                <div class="mb-3">
+                <label for="univ" class="form-label">Link CCTV:</label>
+                <input type="input" class="form-control" placeholder="rtsp://user:12345@1.2.3.4:554" name="link_cctv" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </main>
 </body>
