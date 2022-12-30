@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='cctv.png') }}">
 
 </head>
 
@@ -20,6 +21,7 @@
     <header>
         <div class="topnav">
             <div class="topnav-right">
+              <a href="#guidebook"><i class="bi bi-question-circle"></i></a>
               <a href="#usernam"><i class="bi bi-person-circle"></i> {{username}}</a>
               <a class="aktif" href="{{ url_for('auth.logout') }}">Logout <i class="bi bi-box-arrow-right"></i></a>
             </div>
@@ -36,7 +38,7 @@
                 <select class="dropbtn" name="wincam1">
                 <div class="dropdown-content">
                     <option value=	
-                    "C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4" selected>{{test1}}</option>
+                    "cctv_login\templates\no-signal.mp4" selected>{{test1}}</option>
                     {% for row in range(limit) %}
                             <option value={{list_cctv[1][row]}}>{{list_cctv[0][row]}}</option>
                         {% endfor %}
@@ -47,7 +49,7 @@
                 <select class="dropbtn" name="wincam2">
                     <div class="dropdown-content">
                         <option value=	
-                        "C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4" selected>{{test2}}</option>
+                        "cctv_login\templates\no-signal.mp4" selected>{{test2}}</option>
                         {% for row in range(limit) %}
                             <option value={{list_cctv[1][row]}}>{{list_cctv[0][row]}}</option>
                         {% endfor %}
@@ -58,7 +60,7 @@
                 <select class="dropbtn" name="wincam3">
                     <div class="dropdown-content">
                         <option value=	
-                    "C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4" selected>{{test3}}</option>
+                    "cctv_login\templates\no-signal.mp4" selected>{{test3}}</option>
                         {% for row in range(limit) %}
                             <option value={{list_cctv[1][row]}}>{{list_cctv[0][row]}}</option>
                         {% endfor %}
@@ -69,7 +71,7 @@
                 <select class="dropbtn" name="wincam4">
                     <div class="dropdown-content">
                         <option value=	
-                    "C:\Users\User\Downloads\KP2022-Rama\Content\cctv_login\no-signal.mp4" selected>{{test4}}</option>
+                    "cctv_login\templates\no-signal.mp4" selected>{{test4}}</option>
                         {% for row in range(limit) %}
                             <option value={{list_cctv[1][row]}}>{{list_cctv[0][row]}}</option>
                         {% endfor %}
@@ -89,13 +91,15 @@
                   <input type="text" placeholder="Nama CCTV" class="link" name="nama_cctv">
                   <p class="tambah"><i class="bi bi-link"></i> Link Kamera</p>
                   <input type="text" placeholder="rtsp://user:password@1.2.3.4:554/contoh" class="link" name="link_cctv" title="Format Link Stream CCTV dapat berbeda antar Vendor. Harap dicari tahu terlebih dahulu">
+                  <p class="tambah">Lokasi Kamera</p>
+                  <input type="text" placeholder="ICT" class="link" name="lokasi_cctv" title="Lokasi dari CCTV">
                   <input type="submit" class="submit" value="Tambahkan CCTV" onclick="alert('Silahkan Refresh Page untuk Memperbarui List CCTV');">
                 </li>
               </form>
 
                 <li class="btn-group">
-                  <a href="/dashboardadm/list_user" class="button">Manajemen User</a>
-                  <a href="/dashboardadm/list_cctv"class="button2">Manajemen Cctv</a>
+                  <a href="/dashboardadm/list_user" class="button"><i class="bi bi-person-lines-fill"></i> Manajemen User</a>
+                  <a href="/dashboardadm/list_cctv"class="button2"><i class="bi bi-gear-fill"></i> Manajemen Cctv</a>
                 </li>
               </ul>
         </div>
@@ -104,7 +108,7 @@
     <main class="kamera">
         <div class="row g-0" controls id="ALLCAM">
             <div class="col-md-5">
-                <img src = "{{ url_for('playvid.video_feed') }}" height="315" width ="520" class="w-100 h-100" controls id="cam1" onclick="openFullscreen1();">
+                <img src = "{{ url_for('playvid.video_feed1') }}" height="315" width ="520" class="w-100 h-100" controls id="cam1" onclick="openFullscreen1();">
             </div>
             <div class="col-md-5">
                 <img src = "{{ url_for('playvid.video_feed2') }}" height="315" width ="520" class="w-100 h-100" controls id="cam2" onclick="openFullscreen2();">
@@ -116,29 +120,10 @@
             <div class="col-md-5">
                 <img src = "{{ url_for('playvid.video_feed4') }}" height="315" width ="520" class="w-100 h-100" controls id="cam4" onclick="openFullscreen4();">
             </div>
-          </div>
         </div>
-        <button onclick="openFullNian();">Open Full ALL</button>
+        <button class="fullscreen-btn" onclick="openFullNian();"><i class="bi bi-arrows-fullscreen"></i> Open Full ALL</button>
     </main>
-    
 
-<!-- footer -->
-    <footer>
-        <p>&copy;2022 KP Ambatukam Ambasing</p>
-    </footer>
-
-
-      <!-- script js -->
-    <!-- <script>
-        function myFunction() {
-          var x = document.getElementById("camh");
-          if (x.style.display === "none") {
-            x.style.display = "block";
-          } else {
-            x.style.display = "none";
-          }
-        }
-        </script> -->
         <script type="text/javascript">
             var elem1 = document.getElementById("cam1");
             function openFullscreen1() {
@@ -181,32 +166,7 @@
               }
             }
             
-            // var elem2 = document.getElementById("myvideo2");
-
-            // function openFullscreen() {
-            //   if (elem2.requestFullscreen) {
-            //     elem2.requestFullscreen();
-            //   } else if (elem2.msRequestFullscreen) { /* IE11 */
-            //     elem2.msRequestFullscreen();
-            //   }
-            // }
-            // var elem3 = document.getElementById("myvideo3");
-            // function openFullscreen() {
-            //   if (elem3.requestFullscreen) {
-            //     elem3.requestFullscreen();
-            //   } else if (elem3.msRequestFullscreen) { /* IE11 */
-            //     elem3.msRequestFullscreen();
-            //   }
-            // }
-            // var elem4 = document.getElementById("myvideo4");
-            // function openFullscreen() {
-            //   if (elem4.requestFullscreen) {
-            //     elem4.requestFullscreen();
-            //   } else if (elem4.msRequestFullscreen) { /* IE11 */
-            //     elem4.msRequestFullscreen();
-            //   }
-            // }
-        </script> -->
+        </script>
 </body>
 
 </html>

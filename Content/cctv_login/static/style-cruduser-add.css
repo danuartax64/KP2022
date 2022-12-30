@@ -53,6 +53,7 @@
   .dropbtn{
     border-radius: 9px;
     background-color: rgb(33, 173, 173);
+    color: white;
   }
 
   .dropbtn:hover:not(.active) {

@@ -3,11 +3,12 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from cctv_login import app
 from datetime import timedelta
-from cctv_login.database_cctv import active_camera, get_db_camera
+from cctv_login.database_cctv import active_camera, get_db_camera, active_camera_client, get_db_camera_client
 
 akses = Blueprint('auth',__name__)
-admin=[]
-usernamepass=["Nobody"]
+admin=[None]
+usernamepass=[None]
+user=[None]
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'pep2'
@@ -40,12 +41,13 @@ def login():
             # Buat sesi expired ketika lewat dari 9 jam
             app.permanent_session_lifetime = timedelta(hours=1)
 
-            if account['fullakses'] == "1":
+            if account['lokasi'] == "ADMIN":
                 admin.append(username)
                 usernamepass[0]=session['username']
 
                 return redirect("/dashboardadm")
             else:
+                user[0]= account['lokasi']
                 return redirect('/dashboard')
         else:
             # Gagal login
@@ -56,8 +58,9 @@ def login():
 @akses.route('/dashboard')
 def indexcam():
     if 'loggedin' in session:
-        get_db_camera()
-        return render_template('indexcam.html', username=session['username'], list_cctv = active_camera, test1=active_camera[2][0], test2=active_camera[2][1], test3=active_camera[2][2], test4=active_camera[2][3], limit=len(active_camera[0]))
+        get_db_camera_client(user[0])
+        print(active_camera_client[0])
+        return render_template('indexcam.html', username=session['username'], list_cctv = active_camera_client, test1=active_camera_client[2][0], test2=active_camera_client[2][1], test3=active_camera_client[2][2], test4=active_camera_client[2][3],limit=len(active_camera_client[0]))
     else:
         msg = 'Login Terlebih Dahulu!!!'
         return render_template('index.html', msg=msg)
@@ -68,7 +71,13 @@ def logout():
     session.pop('id', None)
     session.pop('username', None)
     usernamepass[0]="None"
-    admin[0]="Gatek"
+    try:
+        admin[0]="Gatek"
+        user[0]="None"
+        active_camera[3] = [r'cctv_login\templates\no-signal.mp4',r'cctv_login\templates\no-signal.mp4',r'cctv_login\templates\no-signal.mp4',r'cctv_login\templates\no-signal.mp4']
+        print(active_camera_client[3])
+    except IndexError:
+        pass
     # Redirect to login page
     return redirect('/')   
 

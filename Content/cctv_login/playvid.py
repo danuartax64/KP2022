@@ -27,7 +27,7 @@ def gen_frames(cam):  # generate frame by frame from camera
 
 playvid = Blueprint('playvid',__name__)
 @playvid.route(f'/{get_random_string(16)}')
-def video_feed():
+def video_feed1():
         """Video streaming route. Put this in the src attribute of an img tag."""
         return Response(gen_frames(active_camera[3][0]),
             mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -39,7 +39,6 @@ def video_feed2():
             mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @playvid.route(f'/{get_random_string(16)}')
-# @playvid.route(f'/video_feed3')
 def video_feed3():
     
         """Video streaming route. Put this in the src attribute of an img tag."""

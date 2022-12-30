@@ -18,7 +18,9 @@ def closeDb():
 
 #array load nama dan link camera dari databae
 #index array ke 2-3 merupakan nama dan link dari kamera yang akan diplay pada browser
-active_camera = [[],[],['WinCam1', 'WinCam2', 'WinCam3', 'WinCam4'],[r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4',r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4',r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4',r'C:\Users\user\Downloads\KP2022-Clean\KP2022-Clean\Content\cctv_login\no-signal.mp4']]
+active_camera = [[],[],['WinCam1', 'WinCam2', 'WinCam3', 'WinCam4'],[r'cctv_login\templates\no-signal.mp4',r'cctv_login\templates\no-signal.mp4',r'cctv_login\templates\no-signal.mp4',r'cctv_login\templates\no-signal.mp4']]
+
+active_camera_client = [[],[],['WinCam1', 'WinCam2', 'WinCam3', 'WinCam4']]
 
 def get_db_camera():
     openDb()
@@ -33,12 +35,25 @@ def get_db_camera():
         active_camera[0].append(row[0])
         active_camera[1].append(row[1])
     closeDb()
-
 get_db_camera()
 
-def add_cctv(nama_cctv, link_cctv):
+def get_db_camera_client(site):
     openDb()
-    cursor.execute('''INSERT INTO `list_cctv`(`nama_cctv`, `link`) VALUES(%s,%s)''', (nama_cctv,link_cctv))
+    sql_select_Query = f"select * from list_cctv where lokasi = '{site}'"
+    cursor = connection.cursor()
+    cursor.execute(sql_select_Query)
+    # get all records
+    records = cursor.fetchall()
+    active_camera_client[0] = []
+    active_camera_client[1] = []
+    for row in records:
+        active_camera_client[0].append(row[0])
+        active_camera_client[1].append(row[1])
+    closeDb()
+
+def add_cctv(nama_cctv, link_cctv,lokasi_cctv):
+    openDb()
+    cursor.execute('''INSERT INTO `list_cctv`(`nama_cctv`, `link`, `lokasi`) VALUES(%s,%s,%s)''', (nama_cctv,link_cctv,lokasi_cctv))
     connection.commit()
     closeDb()
 
@@ -54,6 +69,7 @@ def update_active_wincam():
         active_camera[3][1]=wincam2
         active_camera[3][2]=wincam3
         active_camera[3][3]=wincam4
+        get_db_camera()
 
         return redirect('/dashboard')
     return redirect('/')
@@ -81,7 +97,8 @@ def add_cctv_dashboardadm():
     if request.method =='POST':
         nama_cctv = request.form['nama_cctv']
         link_cctv = request.form['link_cctv']
-        add_cctv(nama_cctv, link_cctv)
+        lokasi_cctv = request.form['lokasi_cctv']
+        add_cctv(nama_cctv, link_cctv, lokasi_cctv)
 
         return redirect('/dashboardadm')
     else:
@@ -123,8 +140,9 @@ def update_cctv(id):    #edit cctv
     elif 'loggedin' in session and request.method == "POST":
         nama_cctv = request.form['nama_cctv']
         link_cctv = request.form['link_cctv']
+        lokasi_cctv = request.form['lokasi_cctv']
         openDb()
-        cursor.execute("UPDATE list_cctv SET nama_cctv = %s, link = %s WHERE id = %s;", (nama_cctv, link_cctv, id))
+        cursor.execute("UPDATE list_cctv SET nama_cctv = %s, link = %s, lokasi = %s WHERE id = %s;", (nama_cctv, link_cctv,lokasi_cctv, id))
         connection.commit()
         closeDb()
 
@@ -135,7 +153,8 @@ def add_cctv_crud():
     if request.method =='POST':
         nama_cctv = request.form['nama_cctv']
         link_cctv = request.form['link_cctv']
-        add_cctv(nama_cctv, link_cctv)
+        lokasi_cctv = request.form['lokasi_cctv']
+        add_cctv(nama_cctv, link_cctv,lokasi_cctv)
         return redirect('/dashboardadm/list_cctv')
 
     elif request.method == 'GET':
